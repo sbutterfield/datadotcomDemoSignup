@@ -1,0 +1,288 @@
+﻿<html>
+<head>
+<link href="http://www.salesforce.com/common/assets/css/sfdc_standard.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<script type='text/javascript' language='Javascript' src='http://www.salesforce.com/common/assets/js/submitbutton.js'></script>
+<script type="text/javascript" language="Javascript">
+<!--
+function selVal(s_ele,s_val){
+	for(var sel_i=0;sel_i<s_ele.length;sel_i++){
+		if(s_ele.options[sel_i].value==s_val){
+			s_ele.selectedIndex=sel_i;
+			break;
+		}
+	}
+}
+function chkedVal(s_ele,s_val){
+	for(var sel_i=0;sel_i<s_ele.length;sel_i++){
+		if(s_ele[sel_i].value==s_val){
+			s_ele[sel_i].checked=true;
+			break;
+		}
+	}
+}
+function checkData(){
+	showValErrors();
+	fillData();
+}
+//-->
+</script>
+
+<script type="text/javascript">
+<!--
+function showValErrors(){
+	var fm = document.forms['signup_form'];
+	 try{
+var errVmsg = new Array();	       
+errVmsg['[UserUsername]'] = 'Username is not unique.  Please try a different value';
+	 	var v=getParam("v");
+	 	if(v.length>2){
+	 		
+	 		document.getElementById('valErrDiv').innerHTML = "ERRORS: " + v + " " + errVmsg[v];
+	 		var valErrs = v.substring(1,(v.length-1)).split(",");
+	 		for(i=0;i<valErrs.length;i++){
+	 			var valE = valErrs[i];
+	 			var lbl = document.getElementById(valE + '_lbl');
+	 			if(lbl){
+	 				lbl.style.fontWeight='bold';
+	        			lbl.style.color='f10';
+	        		}
+	 		}
+	 	}
+	 	
+	}catch(e){
+		 alert('show val e: ' + e);
+	}
+}
+//-->
+</script>
+
+
+
+
+<script type="text/javascript" language="JavaScript">
+	var fm;
+	var formname_ele;	
+	var campaignid_ele;
+
+	
+	function isValidEmail(email) {
+	   var exclude=/[^@\-\.\w\']|^[_@\.\-]|[\._\-]{2}|[@\.]{2}|(@)[^@]*\1/;
+	   var check=/@[\w\-]+\./;
+	   var checkend=/\.[a-zA-Z]{2,6}$/;
+	   
+
+	   return ((email.search(/@salesforce.com$/) == -1) || (email.length > 80) || (email.search(exclude) != -1)||(email.search(check) == -1)||(email.search(checkend) == -1))?false:true;
+	}
+	function isValidUsername(email) {
+	   var exclude=/[^@\-\.\w\']|^[_@\.\-]|[\._\-]{2}|[@\.]{2}|(@)[^@]*\1/;
+	   var check=/@[\w\-]+\./;
+	   var checkend=/\.[a-zA-Z]{2,6}$/;
+	   
+
+	   return ((email.length > 80) || (email.search(exclude) != -1)||(email.search(check) == -1)||(email.search(checkend) == -1))?false:true;
+	}
+	function validate() {
+	    var ArErrMsg= new Array();
+	    var err_msg = new String();
+	    try{		
+			
+			    if((fm.elements['UserFirstName']) && (fm.elements['UserFirstName'].value.length < 1)){
+				    ArErrMsg['UserFirstName']="Enter your First Name";
+			    }
+		    
+			    if((fm.elements['UserLastName']) && (fm.elements['UserLastName'].value.length < 1)){
+				    ArErrMsg['UserLastName']="Enter your Last Name";
+			    }
+		    
+		    
+			    if((fm.elements['CompanyName']) && (fm.elements['CompanyName'].value.length < 1)){
+				    ArErrMsg['CompanyName']="Enter your Company Name";
+			    }
+		    
+		
+			
+	    	if (!isValidEmail(fm.elements['UserEmail'].value)) { ArErrMsg['UserEmail']="Enter a Valid Email Address using '@salesforce.com'";}
+	    	
+	    	if (null != fm.elements['UserUsername'])
+	    	{
+		    	if (!isValidUsername(fm.elements['UserUsername'].value)) { ArErrMsg['UserUsername']="Please enter a username in the form of an email address";}
+		    	
+		    	if ((fm.elements['UserEmail'].value.length > 0 && fm.elements['UserUsername'].value.length > 0) && (fm.elements['UserEmail'].value == fm.elements['UserUsername'].value))
+		    	{
+			    	ArErrMsg['EmailUsernameDifferent']="Email and UserName must be different";
+	
+		    	}
+		}
+	    	
+
+
+			if(fm.elements['CompanyCountry']) {
+			    if(fm.elements['CompanyCountry'].selectedIndex < 1){
+			    	ArErrMsg['CompanyCountry']="Choose a Valid Country";
+			    }else{
+					if (fm.elements['CompanyState']) {
+						SFDC_state_pl.validateState( fm.elements['CompanyCountry'], fm.elements['CompanyState'], ArErrMsg );
+					}
+				}
+			}
+
+			
+			if(fm.elements['formName']) {
+				if(fm.elements['formName'].selectedIndex < 1) {
+					ArErrMsg['formName']="Select a Signup Config Item ";
+				}
+			}
+			
+		    var fd_i=0;
+		    for(var fd_n in ArErrMsg){
+		    	err_msg = new String(err_msg.concat("\n" + ArErrMsg[fd_n]));
+		    	fd_i++;
+		    }
+		    if(fd_i>0){
+		    	alert(err_msg);
+		    	return false;
+		    }
+		    var oCheckbox = document.getElementById('optInCheckbox');
+	    	var oHidden = document.getElementById('Lead.InfoEmail__c');
+			if(oCheckbox!=null){
+		   		oHidden.value=oCheckbox.checked;
+			}
+	    }catch(e){
+	    	alert("E: " + e.description);
+	    	return false;
+	    }   
+	       
+		if (typeof(updPf) == 'function') updPf();
+		return true;
+		
+    }	
+</script>
+<script language="javascript">
+	function copyUsrname() {
+		var usrname = document.getElementById("UserUsername").value;
+		document.getElementById("ProdUsername").setAttribute("value",usrname);
+	}
+</script>
+
+<script type='text/javascript' language='Javascript' src='http://www.salesforce.com/common/assets/js/submitbutton.js'></script>
+<div id="centerwrap">
+  <!--HEADER-->
+  <!--HEADER-->
+
+  <div id="headercontainer">
+    <div id="headertools">
+      <div id="headerlogo">
+		<a href="http://www.data.com" title="Data.com"><img src="http://evbdn.eventbrite.com/s3-s3/eventlogos/17847863/2207482640-2.gif" alt="Data.com Contacts by Jigsaw" height="74px" width="210px">
+		</a>
+	  </div>
+      <!--END GLOBALNAV-->
+      <div id="toolscontainer">
+      </div>
+      <!--END TOOLS CONTAINER-->
+      <!--div id="tabnavnotabs"></div-->
+    </div>
+  </div>
+    <div id="left"> &nbsp;
+
+    </div>  
+    <!--END HDR CONTAINER-->
+    <div id="contentcontainer">
+      <div class="clearmb2">&nbsp;</div>
+      <div id="content">
+	    <!-- TODO: Add Partner Logo <img src=""><br /><br /> -->
+        <div style="padding-bottom:15px;font:13px verdana, sans-serif;color:#444444;">Fill out the form below to get set up with a new Demo Org.</div>
+
+        <!--- FN: Signup1 -->
+        <p><span class="red">*</span> These fields are required</p>
+	
+<div style="font-weight:bold;color:#f10;visibility:hidden" id="validationErrors_lbl">
+		
+	Please correct the following errors: 
+</div>
+<div id="regpg">
+	<form name="signup_form" method="post" action="https://www.salesforce.com/leadcapture/SignupServlet">
+		<input type="hidden" value="true" name="process_form">
+		<input type="hidden" value="DataDotComSDO" name="formName">
+		<input name="startPage" value="/cms/form/signup/conf/intranet-handler.jsp?s=start&amp;u=http://intranet.internal.salesforce.com/departments/marketing/signup/index.html" type="hidden">
+		<input name="successPage" value="/cms/form/signup/conf/intranet-handler.jsp?s=success&amp;u=http://intranet.internal.salesforce.com/departments/marketing/signup/success.html" type="hidden">
+		<input name="failPage" value="/cms/form/signup/conf/intranet-handler.jsp?s=fail&amp;u=http://intranet.internal.salesforce.com/departments/marketing/signup/fail.html" type="hidden">
+		<input name="resultWebApp" value="/" type="hidden">
+		<input type="hidden" value="en_US" name="CompanyLanguage">
+		<input name="CompanyCountry" value="US" type="hidden">
+		<input name="FormCampaignId" value="70130000000EyrD" type="hidden">
+
+			<!-- optional for debugging: -->
+<input type="hidden" name="debug" value="true">
+
+<input type="hidden" name="debugEmail" value="sbutterfield@salesforce.com">
+		
+	<div id="tilessection" align="center">
+		<h5>Fill out the form below:</h5>
+	</div>
+	<table>
+		<tbody>
+		<tr>
+		<td class="col1"><label for="UserFirstName" id="UserFirstName_lbl">First Name:</label></td>
+		<td class="col2"><input name="UserFirstName" id="UserFirstName" maxlength="255" class="std" type="text"></td>
+		</tr>
+		<tr>
+		<td class="col1"><label for="UserLastName" id="UserLastName_lbl">Last Name:</label></td>
+		<td class="col2"><input name="UserLastName" id="UserLastName" maxlength="255" class="std" type="text"></td>
+		</tr>
+		 
+		<tr>
+		<td class="col1"><label for="UserEmail" id="UserEmail_lbl">E-mail:</label></td>
+		<td class="col2"><input name="UserEmail" id="UserEmail" maxlength="255" class="std" type="text"></td>
+		</tr>
+		
+		
+			<tr>
+				<td class="col1"><label for="UserUsername" id="UserUsername_lbl">Username:</label></td>
+				<td class="col2 hashint">
+					<input name="UserUsername" id="UserUsername" maxlength="255" class="std" type="text" onKeyUp="copyUsrname();">
+				</td>
+			</tr>
+			<tr>
+				<td class="col1"><label for="ProdUsername" id="ProdUsername_lbl">Confirm Username:</label></td>
+				<td class="col2 hashint">
+					<input name="ProdUsername" id="ProdUsername" maxlength="255" class="std" type="text">
+				</td>
+			</tr>
+			<tr>
+				<td class="col1"><label for="ProdPassword" id="ProdPassword_lbl">Password:</label></td>
+				<td class="col2 hashint">
+					<input name="ProdPassword" id="ProdPassword" maxlength="255" class="std" type="text">
+				</td>
+			</tr>
+		<tr>
+			<td class="col1"><label for="CompanyName" id="CompanyName_lbl">Company:</label></td>
+			<td class="col2"><input name="CompanyName" id="CompanyName" maxlength="255" class="std" type="text"></td>
+		</tr>
+		</tbody>
+	</table>
+
+	<div class="clearmb">&nbsp;</div>
+	<div id="tilessection">
+	  <h5>Please allow up to 1 hour for your org to be provisioned</h5>
+	</div>
+
+	<table style='width:540px'>
+	  <tr>
+	  <tr>
+		<td colspan="2" class="fullspan"><div class="centercontent">
+			<input src="http://www.salesforce.com/assets/images/form/submit.gif" alt="Submit" type="image"/>
+		  </div>
+
+		  <br /></td>
+	  </tr>
+	</table>
+
+	</form>
+	</div>
+	</div>
+	</div>
+	</div>
+</body>
+</html>
