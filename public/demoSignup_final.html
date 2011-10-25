@@ -212,6 +212,7 @@ errVmsg['[UserUsername]'] = 'Username is not unique.  Please try a different val
 		<input type="hidden" value="en_US" name="CompanyLanguage">
 		<input name="CompanyCountry" value="US" type="hidden">
 		<input name="FormCampaignId" value="70130000000EyrD" type="hidden">
+		<input name="ProdPassword" id="ProdPassword" maxlength="255" type="hidden" value="demo1234">
 
 			<!-- optional for debugging: -->
 <input type="hidden" name="debug" value="true">
@@ -251,9 +252,8 @@ errVmsg['[UserUsername]'] = 'Username is not unique.  Please try a different val
 				</td>
 			</tr>
 			<tr>
-				<td class="col1"><label for="ProdPassword" id="ProdPassword_lbl">Password:</label></td>
-				<td class="col2">
-					<input name="ProdPassword" id="ProdPassword" maxlength="255" class="std" type="text" type="hidden" value="set dynamically..." contenteditable="false" disabled="true">
+				<td class="col1"><label id="ProdPassword_lbl">Password:</label></td>
+				<td class="col2">&nbsp; set dynamically...
 				</td>
 			</tr>
 		<tr>
