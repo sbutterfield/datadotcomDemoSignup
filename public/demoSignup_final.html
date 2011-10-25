@@ -224,40 +224,40 @@ errVmsg['[UserUsername]'] = 'Username is not unique.  Please try a different val
 	<table>
 		<tbody>
 		<tr>
-		<td class="col1"><label for="UserFirstName" id="UserFirstName_lbl">First Name:</label></td>
+		<td class="col1"><label for="UserFirstName" id="UserFirstName_lbl">First Name:<span class="red">*</span></label></td>
 		<td class="col2"><input name="UserFirstName" id="UserFirstName" maxlength="255" class="std" type="text"></td>
 		</tr>
 		<tr>
-		<td class="col1"><label for="UserLastName" id="UserLastName_lbl">Last Name:</label></td>
+		<td class="col1"><label for="UserLastName" id="UserLastName_lbl">Last Name:<span class="red">*</span></label></td>
 		<td class="col2"><input name="UserLastName" id="UserLastName" maxlength="255" class="std" type="text"></td>
 		</tr>
 		 
 		<tr>
-		<td class="col1"><label for="UserEmail" id="UserEmail_lbl">E-mail:</label></td>
+		<td class="col1"><label for="UserEmail" id="UserEmail_lbl">E-mail:<span class="red">*</span></label></td>
 		<td class="col2"><input name="UserEmail" id="UserEmail" maxlength="255" class="std" type="text"></td>
 		</tr>
 		
 		
 			<tr>
-				<td class="col1"><label for="UserUsername" id="UserUsername_lbl">Username:</label></td>
+				<td class="col1"><label for="UserUsername" id="UserUsername_lbl">Username:<span class="red">*</span></label></td>
 				<td class="col2 hashint">
 					<input name="UserUsername" id="UserUsername" maxlength="255" class="std" type="text" onKeyUp="copyUsrname();">
 				</td>
 			</tr>
 			<tr>
-				<td class="col1"><label for="ProdUsername" id="ProdUsername_lbl">Confirm Username:</label></td>
+				<td class="col1"><label for="ProdUsername" id="ProdUsername_lbl">Confirm Username:<span class="red">*</span></label></td>
 				<td class="col2 hashint">
 					<input name="ProdUsername" id="ProdUsername" maxlength="255" class="std" type="text">
 				</td>
 			</tr>
 			<tr>
 				<td class="col1"><label for="ProdPassword" id="ProdPassword_lbl">Password:</label></td>
-				<td class="col2 hashint">
-					<input name="ProdPassword" id="ProdPassword" maxlength="255" class="std" type="text">
+				<td class="col2">
+					<input name="ProdPassword" id="ProdPassword" maxlength="255" class="std" type="text" type="hidden" value="set dynamically..." contenteditable="false" disabled="true">
 				</td>
 			</tr>
 		<tr>
-			<td class="col1"><label for="CompanyName" id="CompanyName_lbl">Company:</label></td>
+			<td class="col1"><label for="CompanyName" id="CompanyName_lbl">Company:<span class="red">*</span></label></td>
 			<td class="col2"><input name="CompanyName" id="CompanyName" maxlength="255" class="std" type="text"></td>
 		</tr>
 		</tbody>
